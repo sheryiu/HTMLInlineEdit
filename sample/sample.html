@@ -1,25 +1,26 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="./style.css"/>
+		<script type="text/javascript" src="../inline-edit.js"></script>
 	</head>
 	<body>
 		<section>
 			<h1>
-				Normal Sample
+				Default Sample
 			</h1>
 			<table>
 				<tr><th>User Name</th><th>Job Title</th><th>Remarks</th><th>Action</th></tr>
-				<tr>
-					<td>Cloud</td>
-					<td>Mercenary</td>
-					<td>Loves using large swords</td>
-					<td><input type="button" value="Edit"/></td>
+				<tr id="normalTableRow1">
+					<td data-inlineValue="Cloud" data-inlineName="user">Cloud</td>
+					<td data-inlineValue="Mercenary" data-inlineName="title">Mercenary</td>
+					<td data-inlineValue="Loves using large swords" data-inlineName="remark">Loves using large swords</td>
+					<td data-inlineMode="button"><input type="button" value="Edit" onclick="inlineEdit('normalTableRow1', inlineDefaultUpdateCell, inlineDefaultFinish)"/></td>
 				</tr>
-				<tr>
-					<td>Noctis</td>
-					<td>Prince</td>
-					<td>Possesses magical powers</td>
-					<td><input type="button" value="Edit"/></td>
+				<tr id="normalTableRow2">
+					<td data-inlineValue="Noctis">Noctis</td>
+					<td data-inlineValue="Prince">Prince</td>
+					<td data-inlineValue="Possesses magical powers">Possesses magical powers</td>
+					<td data-inlineMode="button"><input type="button" value="Edit" onclick="inlineEdit('normalTableRow2', inlineDefaultUpdateCell)"/></td>
 				</tr>
 			</table>
 		</section>
