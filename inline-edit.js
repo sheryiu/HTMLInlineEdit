@@ -1,14 +1,17 @@
-function inlineEdit(rowName, updateCellFunc, finishFunc) {
+var inlineEditButtonContent = {};
+
+function inlineEdit(rowName, callback, updateCellFunc, finishFunc) {
 	var tableRow = document.getElementById(rowName);
 	for (var i=0; i<tableRow.childElementCount; i++) {
 		var cell = tableRow.children[i];
-		updateCellFunc(cell, i, rowName, finishFunc);
+		updateCellFunc(cell, i, rowName, callback, finishFunc);
 	}
 }
 
-function inlineDefaultUpdateCell(cell, i, rowName, finishFunc) {
+function inlineDefaultUpdateCell(cell, i, rowName, callback, finishFunc) {
 	var cellContent = "";
 	if (cell.dataset.inlinemode == "button") {
+		inlineEditButtonContent[rowName] = cell.innerHTML;
 		cellContent += "<input type='submit' value='Finish' form='"+rowName+"Form'/>";
 	} else {
 		cellContent += "<input type='text' value='"+cell.dataset.inlinevalue+"' form='"+rowName+"Form'/>";
@@ -22,13 +25,13 @@ function inlineDefaultUpdateCell(cell, i, rowName, finishFunc) {
 		document.getElementById(rowName+"Form").onsubmit = function () {
 			event.preventDefault();
 			if (this.reportValidity()) {
-				finishFunc(rowName);
+				finishFunc(rowName, callback);
 			}
 		};
 	}
 }
 
-function inlineDefaultFinish(rowName) {
+function inlineDefaultFinish(rowName, callback) {
 	var tableRow = document.getElementById(rowName);
 	var rowData = {};
 	for (var i=0; i<tableRow.childElementCount; i++) {
@@ -38,7 +41,12 @@ function inlineDefaultFinish(rowName) {
 			cell.dataset.inlinevalue = cell.children[0].value;
 		}
 	}
-	console.log(rowData);
+	
+	// do whatever ajax magic
+	var getType = {};
+	if (callback && getType.toString.call(callback) === '[object Function]') {
+		callback(rowData, rowName);
+	}
 	
 	for (i=0; i<tableRow.childElementCount; i++) {
 		var cell = tableRow.children[i];
@@ -49,7 +57,7 @@ function inlineDefaultFinish(rowName) {
 function inlineDefaultFinishCell(cell, i, rowName) {
 	var cellContent = "";
 	if (cell.dataset.inlinemode == "button") {
-		cellContent += "<input type='button' value='Edit'/>";
+		cellContent += inlineEditButtonContent[rowName];
 	} else {
 		cellContent += cell.dataset.inlinevalue;
 	}
