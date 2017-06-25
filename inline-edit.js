@@ -1,14 +1,17 @@
 var inlineEditButtonContent = {};
 
-function inlineEdit(rowName, callback, updateCellFunc, finishFunc) {
+function inlineEdit(rowName, options) {
 	var tableRow = document.getElementById(rowName);
 	for (var i=0; i<tableRow.childElementCount; i++) {
 		var cell = tableRow.children[i];
-		updateCellFunc(cell, i, rowName, callback, finishFunc);
+		if (options.hasOwnProperty("updateCell"))
+			options.updateCell(cell, i, rowName, options);
+		else
+			inlineDefaultUpdateCell(cell, i, rowName, options);
 	}
 }
 
-function inlineDefaultUpdateCell(cell, i, rowName, callback, finishFunc) {
+function inlineDefaultUpdateCell(cell, i, rowName, options) {
 	var cellContent = "";
 	if (cell.dataset.inlinemode == "button") {
 		inlineEditButtonContent[rowName] = cell.innerHTML;
@@ -25,13 +28,16 @@ function inlineDefaultUpdateCell(cell, i, rowName, callback, finishFunc) {
 		document.getElementById(rowName+"Form").onsubmit = function () {
 			event.preventDefault();
 			if (this.reportValidity()) {
-				finishFunc(rowName, callback);
+				if (options.hasOwnProperty("finish"))
+					options.finish(rowName, options);
+				else
+					inlineDefaultFinish(rowName, options);
 			}
 		};
 	}
 }
 
-function inlineDefaultFinish(rowName, callback) {
+function inlineDefaultFinish(rowName, options) {
 	var tableRow = document.getElementById(rowName);
 	var rowData = {};
 	for (var i=0; i<tableRow.childElementCount; i++) {
@@ -43,14 +49,15 @@ function inlineDefaultFinish(rowName, callback) {
 	}
 	
 	// do whatever ajax magic
-	var getType = {};
-	if (callback && getType.toString.call(callback) === '[object Function]') {
-		callback(rowData, rowName);
-	}
+	if (options.hasOwnProperty("finishCallback"))
+		options.finishCallback(rowData, rowName);
 	
 	for (i=0; i<tableRow.childElementCount; i++) {
 		var cell = tableRow.children[i];
-		inlineDefaultFinishCell(cell, i, rowName);
+		if (options.hasOwnProperty("finishCell"))
+			options.finishCell(cell, i, rowName);
+		else
+			inlineDefaultFinishCell(cell, i, rowName);
 	}
 }
 

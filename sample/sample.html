@@ -11,9 +11,14 @@
 				}
 				return str;
 			}
-			function sampleDefaultCallback(rowData, rowName) {
+			function defaultSampleCallback(rowData, rowName) {
 				alert(rowName+"\n"+simpleRowDataParser(rowData));
 			}
+			
+			var defaultSampleOptions = {"updateCell": inlineDefaultUpdateCell,
+										"finish": inlineDefaultFinish,
+										"finishCallback": defaultSampleCallback,
+										"finishCell": inlineDefaultFinishCell};
 		</script>
 	</head>
 	<body>
@@ -27,13 +32,13 @@
 					<td data-inlineValue="Cloud" data-inlineName="user">Cloud</td>
 					<td data-inlineValue="Mercenary" data-inlineName="title">Mercenary</td>
 					<td data-inlineValue="Loves using large swords" data-inlineName="remark">Loves using large swords</td>
-					<td data-inlineMode="button"><input type="button" value="Edit" onclick="inlineEdit('normalTableRow1', sampleDefaultCallback, inlineDefaultUpdateCell, inlineDefaultFinish)"/></td>
+					<td data-inlineMode="button"><input type="button" value="Edit" onclick="inlineEdit('normalTableRow1', defaultSampleOptions)"/></td>
 				</tr>
 				<tr id="normalTableRow2">
 					<td data-inlineValue="Noctis" data-inlineName="user">Noctis</td>
 					<td data-inlineValue="Prince" data-inlineName="title">Prince</td>
 					<td data-inlineValue="Possesses magical powers" data-inlineName="remark">Possesses magical powers</td>
-					<td data-inlineMode="button"><input type="button" value="Edit" onclick="inlineEdit('normalTableRow2', sampleDefaultCallback, inlineDefaultUpdateCell, inlineDefaultFinish)"/></td>
+					<td data-inlineMode="button"><input type="button" value="Edit" onclick="inlineEdit('normalTableRow2', defaultSampleOptions)"/></td>
 				</tr>
 			</table>
 		</section>
