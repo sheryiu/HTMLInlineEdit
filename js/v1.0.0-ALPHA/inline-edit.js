@@ -1,9 +1,12 @@
 var inlineEditButtonContent = {};
+var inlineEditRowContents = {};
 
 function inlineEdit(rowName, options) {
 	var tableRow = document.getElementById(rowName);
+	inlineEditRowContents[rowName] = {};
 	for (var i=0; i<tableRow.childElementCount; i++) {
 		var cell = tableRow.children[i];
+		inlineEditRowContents[rowName][i] = cell.innerHTML;
 		if (options.hasOwnProperty("updateCell"))
 			options.updateCell(cell, i, rowName, options);
 		else
@@ -17,7 +20,7 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 		inlineEditButtonContent[rowName] = cell.innerHTML;
 		cellContent += "<input type='submit' value='Finish' form='"+rowName+"Form'/>";
 	} else {
-		cellContent += "<input type='text' value='"+cell.dataset.inlinevalue+"' form='"+rowName+"Form'/>";
+		cellContent += "<input type='text' value='"+inlineEditRowContents[rowName][i]+"' form='"+rowName+"Form'/>";
 		if (i === 0) {
 			cellContent += "<form id='"+rowName+"Form'></form>";
 		}
@@ -44,7 +47,7 @@ function inlineDefaultFinish(rowName, options) {
 		var cell = tableRow.children[i];
 		if (cell.dataset.inlinemode != "button") {
 			rowData[cell.dataset.inlinename] = cell.children[0].value;
-			cell.dataset.inlinevalue = cell.children[0].value;
+			inlineEditRowContents[rowName][i] = cell.children[0].value;
 		}
 	}
 	
@@ -66,7 +69,7 @@ function inlineDefaultFinishCell(cell, i, rowName) {
 	if (cell.dataset.inlinemode == "button") {
 		cellContent += inlineEditButtonContent[rowName];
 	} else {
-		cellContent += cell.dataset.inlinevalue;
+		cellContent += inlineEditRowContents[rowName][i];
 	}
 	cell.innerHTML = cellContent;
 }
