@@ -1,4 +1,3 @@
-var inlineEditButtonContent = {};
 var inlineEditRowContents = {};
 
 function inlineEdit(rowName, options) {
@@ -16,14 +15,16 @@ function inlineEdit(rowName, options) {
 
 function inlineDefaultUpdateCell(cell, i, rowName, options) {
 	var cellContent = "";
-	if (cell.dataset.inlinemode == "button") {
-		inlineEditButtonContent[rowName] = cell.innerHTML;
-		cellContent += "<input type='submit' value='Finish' form='"+rowName+"Form'/>";
-	} else {
-		cellContent += "<input type='text' value='"+inlineEditRowContents[rowName][i]+"' form='"+rowName+"Form'/>";
-		if (i === 0) {
-			cellContent += "<form id='"+rowName+"Form'></form>";
-		}
+	switch (cell.dataset.inlinetype) {
+		case "button":
+			cellContent += "<input type='submit' value='Finish' form='"+rowName+"Form'/>";
+			break;
+		case "text":
+			cellContent += "<input type='text' value='"+inlineEditRowContents[rowName][i]+"' form='"+rowName+"Form'/>";
+			break;
+	}
+	if (i === 0) {
+		cellContent += "<form id='"+rowName+"Form'></form>";
 	}
 	cell.innerHTML = cellContent;
 	if (i === 0) {
@@ -45,7 +46,7 @@ function inlineDefaultFinish(rowName, options) {
 	var rowData = {};
 	for (var i=0; i<tableRow.childElementCount; i++) {
 		var cell = tableRow.children[i];
-		if (cell.dataset.inlinemode != "button") {
+		if (cell.dataset.inlinetype != "button") {
 			rowData[cell.dataset.inlinename] = cell.children[0].value;
 			inlineEditRowContents[rowName][i] = cell.children[0].value;
 		}
@@ -66,10 +67,6 @@ function inlineDefaultFinish(rowName, options) {
 
 function inlineDefaultFinishCell(cell, i, rowName) {
 	var cellContent = "";
-	if (cell.dataset.inlinemode == "button") {
-		cellContent += inlineEditButtonContent[rowName];
-	} else {
-		cellContent += inlineEditRowContents[rowName][i];
-	}
+	cellContent += inlineEditRowContents[rowName][i];
 	cell.innerHTML = cellContent;
 }
