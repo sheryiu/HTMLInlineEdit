@@ -20,7 +20,14 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 			cellContent += "<input type='submit' value='Finish' form='"+rowName+"Form'/>";
 			break;
 		case "text":
-			cellContent += "<input type='text' value='"+inlineEditRowContents[rowName][i]+"' form='"+rowName+"Form'/>";
+			cellContent += "<input type='text' value='"+inlineEditRowContents[rowName][i]+"' form='"+rowName+"Form'";
+			console.log(cell.dataset);
+			for (var key in cell.dataset) {
+				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline") {
+					cellContent += " "+key.substr(6)+"='"+cell.dataset[key]+"'";
+				}
+			}
+			cellContent += "/>";
 			break;
 	}
 	if (i === 0) {

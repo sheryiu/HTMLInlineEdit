@@ -15,7 +15,8 @@
 				alert(rowName+"\n"+simpleRowDataParser(rowData));
 			}
 			
-			var defaultSampleOptions = {"updateCell": inlineDefaultUpdateCell,
+			var defaultSampleOptions = {"finishCallback": defaultSampleCallback};
+			var customFunctionsOptions = {"updateCell": inlineDefaultUpdateCell,
 										"finish": inlineDefaultFinish,
 										"finishCallback": defaultSampleCallback,
 										"finishCell": inlineDefaultFinishCell};
@@ -42,6 +43,31 @@
 					<td data-inlineType="text" data-inlineName="remark">Possesses magical powers</td>
 					<td data-inlineType="button">
 						<input type="button" value="Edit" onclick="inlineEdit('normalTableRow2', defaultSampleOptions)"/>
+					</td>
+				</tr>
+			</table>
+		</section>
+		
+		<section>
+			<h1>
+				Input[type="text"] Properties
+			</h1>
+			<table>
+				<tr><th>NPC Name</th><th>Work</th><th>Remarks</th><th>Action</th></tr>
+				<tr id="customFuncRow1">
+					<td data-inlineType="text" data-inlineName="name" data-inlineRequired="true">Zeus</td>
+					<td data-inlineType="text" data-inlineName="work" data-inlineRequired="true" data-inlinePlaceholder="(Required)"></td>
+					<td data-inlineType="text" data-inlineName="remark">Powerful entity that helps player</td>
+					<td data-inlineType="button">
+						<input type="button" value="Edit" onclick="inlineEdit('customFuncRow1', customFunctionsOptions)"/>
+					</td>
+				</tr>
+				<tr id="customFuncRow2">
+					<td data-inlineType="text" data-inlineName="name" data-inlineRequired="1">High Mage</td>
+					<td data-inlineType="text" data-inlineName="work" data-inlineRequired="1" data-inlinePlaceholder="(Required)">Prince</td>
+					<td data-inlineType="text" data-inlineName="remark" data-inlineSize="40">Teaches magic to player</td>
+					<td data-inlineType="button">
+						<input type="button" value="Edit" onclick="inlineEdit('customFuncRow2', customFunctionsOptions)"/>
 					</td>
 				</tr>
 			</table>
