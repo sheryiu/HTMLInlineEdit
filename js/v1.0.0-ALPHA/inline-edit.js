@@ -16,23 +16,43 @@ function inlineEdit(rowName, options) {
 function inlineDefaultUpdateCell(cell, i, rowName, options) {
 	var cellContent = "";
 	if (i === 0) {
-		cellContent += "<form id='"+rowName+"Form'></form>";
+		cellContent += `<form id='${rowName}Form'></form>`;
 	}
 	switch (cell.dataset.inlinetype) {
 		case "doneButton":
-			cellContent += "<input type='submit' value='Finish' form='"+rowName+"Form'/>";
+			cellContent += `<input type='submit' value='Finish' form='${rowName}Form'/>`;
 			break;
 		case "button":
-			cellContent += cell.innerHTML;
+			cellContent += inlineEditRowContents[rowName][i];
 			break;
 		case "text":
-			cellContent += "<input type='text' value='"+inlineEditRowContents[rowName][i]+"' form='"+rowName+"Form'";
+			cellContent += `<input type='text' value='${inlineEditRowContents[rowName][i]}' form='${rowName}Form'`;
 			for (var key in cell.dataset) {
 				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline") {
-					cellContent += " "+key.substr(6)+"='"+cell.dataset[key]+"'";
+					cellContent += ` ${key.substr(6)}='${cell.dataset[key]}'`;
 				}
 			}
 			cellContent += "/>";
+			break;
+		case "select":
+			cellContent += "<select";
+			for (var key in cell.dataset) {
+				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline") {
+					cellContent += ` ${key.substr(6)}='${cell.dataset[key]}'`;
+				}
+			}
+			cellContent += ">";
+			var optionsTitle = JSON.parse(cell.dataset.inlineoptionstitle);
+			var optionsValue = cell.dataset.hasOwnProperty("inlineoptionsvalue") ? JSON.parse(cell.dataset.inlineoptionstitle) : [];
+			for (var j=0; j<optionsTitle.length; j++) {
+				cellContent += "<option ";
+				cellContent += ((optionsValue.length<=j) ? "" : `value='${optionsValue[j]}'`);
+				cellContent += ((inlineEditRowContents[rowName][i] == optionsTitle[j]) ? " selected='selected'" : "");
+				cellContent += ">";
+				cellContent += optionsTitle[j];
+				cellContent += "</option>";
+			}
+			cellContent += "</select>";
 			break;
 	}
 	cell.innerHTML = cellContent;
@@ -64,6 +84,10 @@ function inlineDefaultFinish(rowName, options) {
 			case "text":
 				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].value;
 				inlineEditRowContents[rowName][i] = cell.children[getFromChildren].value;
+				break;
+			case "select":
+				rowData[cell.dataset.inlinename] = JSON.parse(cell.dataset.inlineoptionstitle)[cell.children[getFromChildren].selectedIndex];
+				inlineEditRowContents[rowName][i] = JSON.parse(cell.dataset.inlineoptionstitle)[cell.children[getFromChildren].selectedIndex];
 				break;
 		}
 	}

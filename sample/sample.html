@@ -14,12 +14,16 @@
 			function defaultSampleCallback(rowData, rowName) {
 				alert(rowName+"\n"+simpleRowDataParser(rowData));
 			}
+			function selectCallback(rowData, rowName) {
+				document.getElementById(rowName).children[3].style.backgroundColor = "#"+rowData.red+rowData.green+rowData.blue;
+			}
 			
 			var defaultSampleOptions = {"finishCallback": defaultSampleCallback};
 			var customFunctionsOptions = {"updateCell": inlineDefaultUpdateCell,
 										"finish": inlineDefaultFinish,
 										"finishCallback": defaultSampleCallback,
 										"finishCell": inlineDefaultFinishCell};
+			var sampleOptions = {"finishCallback": selectCallback};
 		</script>
 	</head>
 	<body>
@@ -74,6 +78,43 @@
 					</td>
 					<td data-inlineType="button">
 						<input type="button" value="Remove" onclick="alert('Remove')"/>
+					</td>
+				</tr>
+			</table>
+		</section>
+		
+		<section>
+			<h1>
+				Select (Dropdown)
+			</h1>
+			<table>
+				<tr><th>Red Component</th><th>Green Component</th><th>Blue Component</th><th>Mix</th></tr>
+				<tr id="selectRow1">
+					<td data-inlineType="select" data-inlineName="red"
+						data-inlineOptionsTitle='["FF","CC","99","66","33","00"]'
+						data-inlineOptionsValue='["FF","CC","99","66","33","00"]'>FF</td>
+					<td data-inlineType="select" data-inlineName="green"
+						data-inlineOptionsTitle='["FF","CC","99","66","33","00"]'
+						data-inlineOptionsValue='["FF","CC","99","66","33","00"]'>99</td>
+					<td data-inlineType="select" data-inlineName="blue"
+						data-inlineOptionsTitle='["FF","CC","99","66","33","00"]'
+						data-inlineOptionsValue='["FF","CC","99","66","33","00"]'>33</td>
+					<td data-inlineType="doneButton">
+						<input type="button" value="Generate" onclick="inlineEdit('selectRow1', sampleOptions)"/>
+					</td>
+				</tr>
+				<tr id="selectRow2">
+					<td data-inlineType="select" data-inlineName="red"
+						data-inlineOptionsTitle='["FF","CC","99","66","33","00"]'
+						data-inlineOptionsValue='["FF","CC","99","66","33","00"]'>00</td>
+					<td data-inlineType="select" data-inlineName="green"
+						data-inlineOptionsTitle='["FF","CC","99","66","33","00"]'
+						data-inlineOptionsValue='["FF","CC","99","66","33","00"]'>33</td>
+					<td data-inlineType="select" data-inlineName="blue"
+						data-inlineOptionsTitle='["FF","CC","99","66","33","00"]'
+						data-inlineOptionsValue='["FF","CC","99","66","33","00"]'>66</td>
+					<td data-inlineType="doneButton">
+						<input type="button" value="Generate" onclick="inlineEdit('selectRow2', sampleOptions)"/>
 					</td>
 				</tr>
 			</table>
