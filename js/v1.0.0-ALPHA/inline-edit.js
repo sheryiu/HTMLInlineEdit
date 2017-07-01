@@ -55,14 +55,16 @@ function inlineDefaultFinish(rowName, options) {
 	var rowData = {};
 	for (var i=0; i<tableRow.childElementCount; i++) {
 		var cell = tableRow.children[i];
-		if (cell.dataset.inlinetype != "doneButton") {
-			if (i == 0) {
-				rowData[cell.dataset.inlinename] = cell.children[1].value;
-				inlineEditRowContents[rowName][i] = cell.children[1].value;
-			} else {
-				rowData[cell.dataset.inlinename] = cell.children[0].value;
-				inlineEditRowContents[rowName][i] = cell.children[0].value;
-			}
+		var getFromChildren = (i === 0) ? 1 : 0;
+		switch (cell.dataset.inlinetype) {
+			case "doneButton":
+				break;
+			case "button":
+				break;
+			case "text":
+				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].value;
+				inlineEditRowContents[rowName][i] = cell.children[getFromChildren].value;
+				break;
 		}
 	}
 	

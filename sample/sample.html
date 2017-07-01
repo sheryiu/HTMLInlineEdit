@@ -53,13 +53,16 @@
 				Input[type="text"] Properties
 			</h1>
 			<table>
-				<tr><th>NPC Name</th><th>Work</th><th>Remarks</th><th>Action</th></tr>
+				<tr><th>NPC Name</th><th>Work</th><th>Remarks</th><th>Action</th><th>Remove</th></tr>
 				<tr id="customFuncRow1">
 					<td data-inlineType="text" data-inlineName="name" data-inlineRequired="true">Zeus</td>
 					<td data-inlineType="text" data-inlineName="work" data-inlineRequired="true" data-inlinePlaceholder="(Required)"></td>
 					<td data-inlineType="text" data-inlineName="remark">Powerful entity that helps player</td>
 					<td data-inlineType="doneButton">
 						<input type="button" value="Edit" onclick="inlineEdit('customFuncRow1', customFunctionsOptions)"/>
+					</td>
+					<td data-inlineType="button">
+						<input type="button" value="Remove" onclick="alert('Remove')"/>
 					</td>
 				</tr>
 				<tr id="customFuncRow2">
@@ -68,6 +71,9 @@
 					<td data-inlineType="text" data-inlineName="remark" data-inlineSize="40">Teaches magic to player</td>
 					<td data-inlineType="doneButton">
 						<input type="button" value="Edit" onclick="inlineEdit('customFuncRow2', customFunctionsOptions)"/>
+					</td>
+					<td data-inlineType="button">
+						<input type="button" value="Remove" onclick="alert('Remove')"/>
 					</td>
 				</tr>
 			</table>
