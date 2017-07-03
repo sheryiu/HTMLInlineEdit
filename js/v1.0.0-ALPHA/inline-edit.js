@@ -14,7 +14,9 @@ function inlineEdit(rowName, options) {
 }
 
 function inlineDefaultUpdateCell(cell, i, rowName, options) {
+	var attributesFilter = ["inlineoptionsvalue", "inlineoptionstitle"];
 	var cellContent = "";
+	var key;
 	if (i === 0) {
 		cellContent += `<form id='${rowName}Form'></form>`;
 	}
@@ -27,8 +29,8 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 			break;
 		case "text":
 			cellContent += `<input type='text' value='${inlineEditRowContents[rowName][i]}' form='${rowName}Form'`;
-			for (var key in cell.dataset) {
-				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline") {
+			for (key in cell.dataset) {
+				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline" && attributesFilter.indexOf(key) == -1) {
 					cellContent += ` ${key.substr(6)}='${cell.dataset[key]}'`;
 				}
 			}
@@ -36,8 +38,8 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 			break;
 		case "select":
 			cellContent += "<select";
-			for (var key in cell.dataset) {
-				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline") {
+			for (key in cell.dataset) {
+				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline" && attributesFilter.indexOf(key) == -1) {
 					cellContent += ` ${key.substr(6)}='${cell.dataset[key]}'`;
 				}
 			}
@@ -53,6 +55,17 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 				cellContent += "</option>";
 			}
 			cellContent += "</select>";
+			break;
+		case "textarea":
+			cellContent += `<textarea form='${rowName}Form'`;
+			for (key in cell.dataset) {
+				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline" && attributesFilter.indexOf(key) == -1) {
+					cellContent += ` ${key.substr(6)}='${cell.dataset[key]}'`;
+				}
+			}
+			cellContent += ">";
+			cellContent += inlineEditRowContents[rowName][i];
+			cellContent += "</textarea>";
 			break;
 	}
 	cell.innerHTML = cellContent;
@@ -88,6 +101,11 @@ function inlineDefaultFinish(rowName, options) {
 			case "select":
 				rowData[cell.dataset.inlinename] = JSON.parse(cell.dataset.inlineoptionstitle)[cell.children[getFromChildren].selectedIndex];
 				inlineEditRowContents[rowName][i] = JSON.parse(cell.dataset.inlineoptionstitle)[cell.children[getFromChildren].selectedIndex];
+				break;
+			case "textarea":
+				// TODO textarea value is \n not <br/>
+				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].value;
+				inlineEditRowContents[rowName][i] = cell.children[getFromChildren].value;
 				break;
 		}
 	}

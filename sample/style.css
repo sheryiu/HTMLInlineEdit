@@ -10,6 +10,7 @@
 }
 
 input,
+textarea,
 select {
 	border: none;
 	background-color: transparent;
@@ -19,12 +20,14 @@ select {
 	outline: none;
 }
 
-input {
+input,
+textarea {
 	appearance: none;
 	-webkit-appearance: none;
 }
 
 input[type="text"],
+textarea,
 select {
 	padding: 0.25rem 0;
 	border-bottom: 1px solid #ffa726;
