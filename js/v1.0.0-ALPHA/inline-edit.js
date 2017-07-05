@@ -45,7 +45,7 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 			}
 			cellContent += ">";
 			var optionsTitle = JSON.parse(cell.dataset.inlineoptionstitle);
-			var optionsValue = cell.dataset.hasOwnProperty("inlineoptionsvalue") ? JSON.parse(cell.dataset.inlineoptionstitle) : [];
+			var optionsValue = cell.dataset.hasOwnProperty("inlineoptionsvalue") ? JSON.parse(cell.dataset.inlineoptionsvalue) : [];
 			for (var j=0; j<optionsTitle.length; j++) {
 				cellContent += "<option ";
 				cellContent += ((optionsValue.length<=j) ? "" : `value='${optionsValue[j]}'`);
