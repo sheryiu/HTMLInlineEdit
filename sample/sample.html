@@ -15,7 +15,8 @@
 				alert(rowName+"\n"+simpleRowDataParser(rowData));
 			}
 			function selectCallback(rowData, rowName) {
-				document.getElementById(rowName).children[3].style.backgroundColor = "#"+rowData.red+rowData.green+rowData.blue;
+				var colors = ["FF","CC","99","66","33","00"];
+				document.getElementById(rowName).children[3].style.backgroundColor = "#"+colors[rowData.red]+colors[rowData.green]+colors[rowData.blue];
 			}
 			
 			var defaultSampleOptions = {"finishCallback": defaultSampleCallback};
