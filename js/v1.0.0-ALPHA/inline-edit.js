@@ -118,7 +118,7 @@ function inlineDefaultFinish(rowName, options) {
 		var cell = tableRow.children[i];
 		if (options.hasOwnProperty("finishCell")) {
 			// return true invokes the default finishCell function
-			if (options.finishCell(cell, i, rowName) === true) {
+			if (options.finishCell(cell, i, rowName, inlineEditRowContents[rowName][i]) === true) {
 				inlineDefaultFinishCell(cell, i, rowName);
 			}
 		} else
