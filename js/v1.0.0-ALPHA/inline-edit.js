@@ -109,16 +109,19 @@ function inlineDefaultFinish(rowName, options) {
 				break;
 		}
 	}
-	
+
 	// do whatever ajax magic
 	if (options.hasOwnProperty("finishCallback"))
 		options.finishCallback(rowData, rowName);
-	
+
 	for (i=0; i<tableRow.childElementCount; i++) {
 		var cell = tableRow.children[i];
-		if (options.hasOwnProperty("finishCell"))
-			options.finishCell(cell, i, rowName);
-		else
+		if (options.hasOwnProperty("finishCell")) {
+			// return true invokes the default finishCell function
+			if (options.finishCell(cell, i, rowName) === true) {
+				inlineDefaultFinishCell(cell, i, rowName);
+			}
+		} else
 			inlineDefaultFinishCell(cell, i, rowName);
 	}
 }
