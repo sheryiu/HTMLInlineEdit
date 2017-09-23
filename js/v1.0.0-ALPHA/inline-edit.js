@@ -30,6 +30,7 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 		case "button":
 			cellContent += inlineEditRowContents[rowName][i];
 			break;
+		case "link":
 		case "text":
 			cellContent += `<input type='text' value='${inlineEditRowContents[rowName][i]}' form='${rowName}Form'`;
 			for (key in cell.dataset) {
@@ -101,6 +102,10 @@ function inlineDefaultFinish(rowName, options) {
 			case "doneButton":
 				break;
 			case "button":
+				break;
+			case "link":
+				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].value;
+				inlineEditRowContents[rowName][i] = "<a href='"+cell.children[getFromChildren].value+"'>"+cell.dataset.inlinelinkdisplay.replace("%link%", cell.children[getFromChildren].value)+"</a>";
 				break;
 			case "text":
 				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].value;
