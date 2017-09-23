@@ -21,6 +21,9 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 		cellContent += `<form id='${rowName}Form'></form>`;
 	}
 	switch (cell.dataset.inlinetype) {
+		case "plain":
+			cellContent = inlineEditRowContents[rowName][i];
+			break;
 		case "doneButton":
 			cellContent += `<input type='submit' value='Finish' form='${rowName}Form'/>`;
 			break;
@@ -67,6 +70,9 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 			cellContent += inlineEditRowContents[rowName][i];
 			cellContent += "</textarea>";
 			break;
+		default:
+			cellContent = inlineEditRowContents[rowName][i];
+			break;
 	}
 	cell.innerHTML = cellContent;
 	if (i === 0) {
@@ -90,6 +96,8 @@ function inlineDefaultFinish(rowName, options) {
 		var cell = tableRow.children[i];
 		var getFromChildren = (i === 0) ? 1 : 0;
 		switch (cell.dataset.inlinetype) {
+			case "plain":
+				break;
 			case "doneButton":
 				break;
 			case "button":
@@ -106,6 +114,8 @@ function inlineDefaultFinish(rowName, options) {
 				// TODO textarea value is \n not <br/>
 				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].value;
 				inlineEditRowContents[rowName][i] = cell.children[getFromChildren].value;
+				break;
+			default:
 				break;
 		}
 	}
