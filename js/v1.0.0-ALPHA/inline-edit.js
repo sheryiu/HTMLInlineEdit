@@ -108,6 +108,8 @@ function inlineDefaultFinish(rowName, options) {
 				break;
 			case "select":
 				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].selectedIndex;
+				rowData["_"+cell.dataset.inlinename+"Title"] = JSON.parse(cell.dataset.inlineoptionstitle)[cell.children[getFromChildren].selectedIndex];
+				rowData["_"+cell.dataset.inlinename+"Value"] = JSON.parse(cell.dataset.inlineoptionsvalue)[cell.children[getFromChildren].selectedIndex];
 				inlineEditRowContents[rowName][i] = JSON.parse(cell.dataset.inlineoptionstitle)[cell.children[getFromChildren].selectedIndex];
 				break;
 			case "textarea":
