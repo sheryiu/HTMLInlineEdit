@@ -31,6 +31,14 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 			cellContent += inlineEditRowContents[rowName][i];
 			break;
 		case "link":
+			cellContent += `<input type='text' value='${cell.innerText}' form='${rowName}Form'`;
+			for (key in cell.dataset) {
+				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline" && attributesFilter.indexOf(key) == -1) {
+					cellContent += ` ${key.substr(6)}='${cell.dataset[key]}'`;
+				}
+			}
+			cellContent += "/>";
+			break;
 		case "text":
 			cellContent += `<input type='text' value='${inlineEditRowContents[rowName][i]}' form='${rowName}Form'`;
 			for (key in cell.dataset) {
