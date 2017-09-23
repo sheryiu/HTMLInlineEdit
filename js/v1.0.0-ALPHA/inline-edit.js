@@ -22,7 +22,7 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 	}
 	switch (cell.dataset.inlinetype) {
 		case "plain":
-			cellContent = inlineEditRowContents[rowName][i];
+			cellContent += inlineEditRowContents[rowName][i];
 			break;
 		case "doneButton":
 			cellContent += `<input type='submit' value='Finish' form='${rowName}Form'/>`;
@@ -71,7 +71,7 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 			cellContent += "</textarea>";
 			break;
 		default:
-			cellContent = inlineEditRowContents[rowName][i];
+			cellContent += inlineEditRowContents[rowName][i];
 			break;
 	}
 	cell.innerHTML = cellContent;
