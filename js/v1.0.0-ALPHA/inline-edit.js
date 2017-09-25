@@ -48,6 +48,15 @@ function inlineDefaultUpdateCell(cell, i, rowName, options) {
 			}
 			cellContent += "/>";
 			break;
+		case "date":
+			cellContent += `<input type='date' value='${inlineEditRowContents[rowName][i]}' form='${rowName}Form'`;
+			for (key in cell.dataset) {
+				if (cell.dataset.hasOwnProperty(key) && key.substr(0, 6) == "inline" && attributesFilter.indexOf(key) == -1) {
+					cellContent += ` ${key.substr(6)}='${cell.dataset[key]}'`;
+				}
+			}
+			cellContent += "/>";
+			break;
 		case "select":
 			cellContent += "<select";
 			for (key in cell.dataset) {
@@ -116,6 +125,7 @@ function inlineDefaultFinish(rowName, options) {
 				inlineEditRowContents[rowName][i] = "<a href='"+cell.children[getFromChildren].value+"'>"+cell.dataset.inlinelinkdisplay.replace("%link%", cell.children[getFromChildren].value)+"</a>";
 				break;
 			case "text":
+			case "date":
 				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].value;
 				inlineEditRowContents[rowName][i] = cell.children[getFromChildren].value;
 				break;
