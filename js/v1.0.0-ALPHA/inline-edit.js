@@ -122,7 +122,7 @@ function inlineDefaultFinish(rowName, options) {
 				break;
 			case "link":
 				rowData[cell.dataset.inlinename] = cell.children[getFromChildren].value;
-				inlineEditRowContents[rowName][i] = "<a href='"+cell.children[getFromChildren].value+"'>"+cell.dataset.inlinelinkdisplay.replace("%link%", cell.children[getFromChildren].value)+"</a>";
+				inlineEditRowContents[rowName][i] = "<a href='"+cell.dataset.inlinelinkformat.replace("%link%", cell.children[getFromChildren].value)+"'>"+cell.children[getFromChildren].value+"</a>";
 				break;
 			case "text":
 			case "date":
