@@ -11,7 +11,7 @@ class StringEscaper {
     }
 
     static safe_tags_replace(str) {
-        return str.replace(/[&<>]/g, replaceTag);
+        return str.replace(/[&<>]/g, StringEscaper.replaceTag);
     }
 }
 
