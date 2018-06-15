@@ -1,13 +1,12 @@
 var inlineEditRowContents = {};
 
 class StringEscaper {
-    var tagsToReplace = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;'
-    };
-
     static replaceTag(tag) {
+		var tagsToReplace = {
+	        '&': '&amp;',
+	        '<': '&lt;',
+	        '>': '&gt;'
+	    };
         return tagsToReplace[tag] || tag;
     }
 
